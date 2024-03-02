@@ -1,0 +1,51 @@
+import { Body, Injectable, UnauthorizedException } from '@nestjs/common';
+import { SignInDto } from './sign-in.dto';
+import { JwtType } from './jwt.type';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/user.interface';
+import { PasswordHashService } from '../password-hash/password-hash.service';
+import { JwtService } from '@nestjs/jwt';
+import { SignUpDto } from './sign-up.dto';
+import { JwtPayload } from './jwt-payload.interface';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private userService: UsersService,
+    private passwordHashService: PasswordHashService,
+    private jwtService: JwtService,
+  ) {}
+  public async signIn(signInDto: SignInDto): Promise<{ access_token: JwtType }> {
+    const user: User | null = this.userService.findOne(signInDto.name);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    if (!(await this.passwordHashService.verify(signInDto.password, user.password))) {
+      throw new UnauthorizedException();
+    }
+
+    const jwtPayload: JwtPayload = {
+      sub: user.userId,
+      name: user.name,
+    };
+
+    return {
+      access_token: await this.jwtService.signAsync(jwtPayload),
+    };
+  }
+
+  public async signUp(@Body() signUpDto: SignUpDto): Promise<{ access_token: JwtType }> {
+    const addedUser = this.userService.create(signUpDto.name, await this.passwordHashService.hash(signUpDto.password));
+
+    const jwtPayload: JwtPayload = {
+      sub: addedUser.userId,
+      name: addedUser.name,
+      icon: addedUser.icon,
+    };
+
+    return {
+      access_token: await this.jwtService.signAsync(jwtPayload),
+    };
+  }
+}
