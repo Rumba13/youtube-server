@@ -27,7 +27,7 @@ export class AuthService {
 
     const jwtPayload: JwtPayload = {
       sub: user.userId,
-      name: user.name,
+      username: user.name,
     };
 
     return {
@@ -40,7 +40,7 @@ export class AuthService {
 
     const jwtPayload: JwtPayload = {
       sub: addedUser.userId,
-      name: addedUser.name,
+      username: addedUser.name,
       icon: addedUser.icon,
     };
 
