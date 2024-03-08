@@ -1,97 +1,99 @@
 import { Injectable } from '@nestjs/common';
 import { Subscription } from './subscription.interface';
-import { wait } from '../wait/wait';
 
 @Injectable()
 export class SubscriptionsService {
+  //TODO rename Subscriptions to channels
   private readonly subscriptions: Subscription[] = [
     {
       title: 'Kabanus',
-      icon: '/ahegao-1.jpg',
+      icon: `${process.env.APP_URL}/ahegao-1.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '1',
+      id: '@Eva',
     },
     {
       title: 'DimkaTv',
-      icon: '/ahegao-2.jpg',
+      icon: `${process.env.APP_URL}/ahegao-2.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '2',
+      id: '@Dima',
     },
     {
       title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '3',
+      id: '@ZVERI',
     },
     {
       title: 'Kabanus',
-      icon: '/ahegao-1.jpg',
+      icon: `${process.env.APP_URL}/ahegao-1.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '4',
+      id: '@Kabanus',
     },
     {
       title: 'DimkaTv',
-      icon: '/ahegao-2.jpg',
+      icon: `${process.env.APP_URL}/ahegao-2.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '5',
+      id: '@Dimka',
     },
     {
-      title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      title: '@ZVERI',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '6',
+      id: '@ZVERI',
     },
     {
       title: 'Kabanus',
-      icon: '/ahegao-1.jpg',
+      icon: `${process.env.APP_URL}/ahegao-1.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '7',
+      id: '@Kabanus',
     },
     {
       title: 'DimkaTv',
-      icon: '/ahegao-2.jpg',
+      icon: `${process.env.APP_URL}/ahegao-2.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '8',
+      id: '@Dima',
     },
     {
       title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '9',
+      id: '@ZVERI',
     },
     {
       title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '10',
+      id: '@ZVERI',
     },
     {
       title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '11',
+      id: '@ZVERI',
     },
     {
       title: 'ZVERI',
-      icon: '/ahegao-3.jpg',
+      icon: `${process.env.APP_URL}/ahegao-3.jpg`,
       isNewVideo: false,
       isStream: false,
-      id: '12',
+      id: '@ZVERI',
     },
   ];
   public async getUserSubscriptions(): Promise<Subscription[]> {
-    await wait(100);
     return this.subscriptions;
+  }
+  public async findOne(channelId: string) {
+    return this.subscriptions.find((channel) => channel.id === channelId);
   }
 }

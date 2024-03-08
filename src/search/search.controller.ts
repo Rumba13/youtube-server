@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { SearchService } from './search.service';
 
-@Controller('search')
-export class SearchController {}
+@Controller()
+export class SearchController {
+  constructor(private searchService: SearchService) {}
+
+  @Get('/recent-search-history')
+  findRecentSearchHistory() {
+    return this.searchService.getRecentSearchHistory();
+  }
+}
