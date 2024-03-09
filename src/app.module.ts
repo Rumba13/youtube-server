@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { JwtModule } from '@nestjs/jwt';
@@ -13,6 +13,8 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { SearchModule } from './search/search.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PlaylistsModule } from './playlists/playlists.module';
+import { AuthMiddleware } from './auth/auth-middleware.service';
+import { VideosController } from './videos/videos.controller';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { PlaylistsModule } from './playlists/playlists.module';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       global: true,
-      signOptions: { expiresIn: '360s' },
+      signOptions: { expiresIn: '99999s' },
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '/static'),
@@ -35,4 +37,8 @@ import { PlaylistsModule } from './playlists/playlists.module';
   controllers: [AppController],
   providers: [AppService, UsersService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(AuthMiddleware).forRoutes(VideosController);
+  }
+}

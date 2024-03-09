@@ -21,6 +21,13 @@ export class UsersService {
       password: '$argon2i$v=19$m=65536,t=3,p=4$sifmW/G/EqrlzL2qsyi45Q$WyesyVHtYh/3Vice8lb930vKQRfnUveshi+fxt+ylYg',
       //88
     },
+    {
+      userId: '3',
+      name: 'Eva2',
+      icon: 'https://www.lucky-print42.ru/image/cache/data/na-avto/30869_vinil-650x489.jpg',
+      password: '$argon2i$v=19$m=65536,t=3,p=4$sifmW/G/EqrlzL2qsyi45Q$WyesyVHtYh/3Vice8lb930vKQRfnUveshi+fxt+ylYg',
+      //88
+    },
   ];
 
   private generateUserId() {

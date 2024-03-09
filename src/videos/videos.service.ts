@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Video } from './video.interface';
 import { VideoTag } from './video-tag.interface';
 import * as process from 'process';
+import { User } from '../users/user.interface';
 
 @Injectable()
 export class VideosService {
@@ -170,7 +171,7 @@ export class VideosService {
     },
     {
       id: '19',
-      channelId: '@ZVERI',
+      channelId: '@ZVERIg',
       duration: 123,
       preview: `${process.env.APP_URL}/video-preview-5.jpg`,
       releaseDate: new Date('Sep 30, 2023 03:24:00'),
@@ -196,8 +197,22 @@ export class VideosService {
       views: 18000,
     },
   ];
-  public async loadRecommendedVideos() {
-    return this.videos;
+  public async loadRecommendedVideos(user: User | null) {
+    if (user === null) {
+      return this.videos;
+    } else {
+      return [
+        {
+          id: '20',
+          channelId: '@Eva',
+          duration: 300,
+          preview: `https://kartinkis.cdnbro.com/posts/53880182-fon-tiurma-12.jpg`,
+          releaseDate: new Date('Dec 30, 1979 03:24:00'),
+          title: 'Еву свергли и заточили в вонючем подвале. Только для своих.',
+          views: 1,
+        },
+      ];
+    }
   }
   public async loadVideoTags(): Promise<VideoTag[]> {
     return [

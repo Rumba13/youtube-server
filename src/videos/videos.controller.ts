@@ -1,13 +1,14 @@
-import { Controller, Get, Header } from '@nestjs/common';
+import { Controller, Get, Header, Req } from '@nestjs/common';
 import { VideosService } from './videos.service';
+import { Request } from 'express';
 
 @Controller()
 export class VideosController {
   constructor(private videosService: VideosService) {}
 
   @Get('/recommended-videos')
-  async findRecommendedVideos() {
-    return await this.videosService.loadRecommendedVideos();
+  async findRecommendedVideos(@Req() request: Request) {
+    return await this.videosService.loadRecommendedVideos(request['user']);
   }
 
   @Get('/video-tags')
