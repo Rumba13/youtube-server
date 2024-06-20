@@ -17,28 +17,29 @@ import { AuthMiddleware } from './auth/auth-middleware.service';
 import { VideosController } from './videos/videos.controller';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      global: true,
-      signOptions: { expiresIn: '99999s' },
-    }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '/static'),
-    }),
-    AuthModule,
-    VideosModule,
-    NotificationsModule,
-    SearchModule,
-    SubscriptionsModule,
-    PlaylistsModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService, UsersService],
+ imports: [
+  ConfigModule.forRoot(),
+  JwtModule.register({
+   secret: process.env.JWT_SECRET,
+   global: true,
+   signOptions: { expiresIn: '99999s' },
+  }),
+  ServeStaticModule.forRoot({
+   rootPath: join(__dirname, '..', '/static'),
+
+  }),
+  AuthModule,
+  VideosModule,
+  NotificationsModule,
+  SearchModule,
+  SubscriptionsModule,
+  PlaylistsModule,
+ ],
+ controllers: [AppController],
+ providers: [AppService, UsersService],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(AuthMiddleware).forRoutes(VideosController);
-  }
+ configure(consumer: MiddlewareConsumer): any {
+  consumer.apply(AuthMiddleware).forRoutes(VideosController);
+ }
 }
